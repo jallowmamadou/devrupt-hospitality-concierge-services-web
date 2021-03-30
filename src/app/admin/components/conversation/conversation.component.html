@@ -1,0 +1,94 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="adminConversations"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span>
+        {{ reservation.primaryGuest.firstName }}
+        {{ reservation.primaryGuest.middleInitial }}
+        {{ reservation.primaryGuest.lastName }}
+      </span>
+      <ion-chip (click)="navigateTo(reservation.id)" title="Reservation">
+        <ion-icon name="bookmarks-outline"></ion-icon>
+        <ion-label>{{ reservation.id }}</ion-label>
+      </ion-chip>
+
+      <ion-chip (click)="notify()" title="Checkin start time">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <ion-label>{{ reservation.checkInTime | date: "medium" }}</ion-label>
+      </ion-chip>
+      <ion-chip title="Unit name">
+        <ion-icon color="primary" name="pin"></ion-icon>
+        <ion-label>{{ reservation.unit.name }}</ion-label>
+      </ion-chip>
+    </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button
+        (click)="presentMore($event, reservation.id)"
+        color="secondary"
+      >
+        <ion-icon
+          ios="ellipsis-horizontal"
+          md="ellipsis-vertical"
+          slot="icon-only"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" [scrollEvents]="true">
+  <div *ngFor="let message of messages$ | async">
+    <ion-row
+      *ngIf="message?.sender?.type === 'GUEST'"
+      class="conversation--participant-host"
+    >
+      <ion-item class="fragment" lines="none">
+        <div class="fragment-wrapper">
+          <div class="fragment--text">
+            {{ message.text }}
+          </div>
+          <small right style="color: #bbbbbb">{{
+            message?.createdAt.toMillis() | date: "shortTime"
+          }}</small>
+        </div>
+      </ion-item>
+    </ion-row>
+    <ion-row
+      *ngIf="message?.sender?.type === 'STAFF'"
+      class="conversation--participant-hotel"
+    >
+      <ion-item class="fragment" lines="none">
+        <div class="fragment-wrapper">
+          <div class="fragment--text">
+            {{ message.text }}
+          </div>
+          <small right style="color: #bbbbbb">{{
+            message?.createdAt.toMillis() | date: "shortTime"
+          }}</small>
+        </div>
+      </ion-item>
+    </ion-row>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-item lines="none">
+    <ion-textarea
+      #input
+      (keydown.enter)="sendMessage($event)"
+      [(ngModel)]="message"
+      autoGrow="true"
+      autofocus="autofocus"
+      name="fragmentInput"
+      placeholder="Write to talk front desk"
+      spellcheck="true"
+    >
+    </ion-textarea>
+    <ion-icon
+      (click)="sendMessage($event)"
+      color="primary"
+      name="send"
+      title="Send"
+    ></ion-icon>
+  </ion-item>
+</ion-footer>

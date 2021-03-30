@@ -1,0 +1,48 @@
+:root {
+  --ion-safe-area-top: 20px;
+  --ion-safe-area-bottom: 22px;
+}
+
+header {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25em;
+  text-transform: uppercase;
+}
+
+section {
+  margin-top: 1em;
+  margin-bottom: 2.5em;
+}
+
+section:not(.full-width),
+.full-width > header {
+  padding: 0 10px;
+}
+
+
+.form-container {
+  max-width: 542px;
+  margin: 0 auto;
+}
+
+
+.form-field {
+  width: 100%;
+  text-transform: capitalize;
+  justify-content: center;
+}
+
+.form {
+  margin-top: 20px;
+  //display: flex;
+  //flex-wrap: wrap;
+  //max-width: 560px;
+  //margin: 0 auto;
+}
+
+.form > .form-group {
+  flex: 1 1 150px;
+  margin: 4px;
+}

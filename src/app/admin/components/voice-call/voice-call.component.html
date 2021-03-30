@@ -1,0 +1,43 @@
+<ion-content>
+  <div class="container" style="height: 100%; width: 400px">
+    <div
+      style="
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <ion-card *ngIf="call$ | async as call">
+        <ion-img
+          src="https://eu.ui-avatars.com/api/?name=Mmamadou+Jallow"
+        ></ion-img>
+        <ion-card-header>
+          <ion-card-subtitle>Incoming</ion-card-subtitle>
+          <ion-card-title>Full Name</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>
+            <ion-chip title="Reservation">
+              <ion-icon name="bookmarks-outline"></ion-icon>
+              <ion-label>{{ "reservation.id " }}</ion-label>
+            </ion-chip>
+
+            <ion-chip title="Checkin start time">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <ion-label>{{ "test" }}</ion-label>
+            </ion-chip>
+            <ion-chip title="Unit name">
+              <ion-icon color="primary" name="pin"></ion-icon>
+              <ion-label>{{ "reservation.unit.name " }}</ion-label>
+            </ion-chip>
+          </p>
+          <ion-item lines="none">
+            <ion-button color="success" size="large">Accept</ion-button>
+            <ion-button color="danger" size="large">Reject</ion-button>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

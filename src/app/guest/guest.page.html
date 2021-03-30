@@ -1,0 +1,19 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Hotel</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="chats">
+      <ion-icon
+        *ngIf="!(messages$ | async); else newMessage"
+        name="chatbubbles-outline"
+      ></ion-icon>
+      <ng-template #newMessage>
+        <ion-icon color="danger" name="mail-unread-outline"></ion-icon>
+      </ng-template>
+      <ion-label>Chat</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
