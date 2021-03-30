@@ -1,0 +1,30 @@
+<ion-content>
+    <div class="container">
+        <div class="form-container">
+            <div class="form">
+                <ion-card>
+                    <ion-item-divider>
+                        <ion-label>
+                            Search for your reservation
+                        </ion-label>
+                    </ion-item-divider>
+                    <ion-item class="ion-margin-vertical" lines="none">
+                        <mat-form-field appearance="outline" class="form-field">
+                            <mat-label>Reservation Id</mat-label>
+                            <input
+                                    (keydown.enter)="searchReservation($event)"
+                                    [(ngModel)]="reservationId"
+                                    autofocus
+                                    matInput
+                                    name="reservation_id"
+                                    placeholder="Enter your reservation id">
+                        </mat-form-field>
+                    </ion-item>
+                    <section>
+                        <ion-button (click)="searchReservation($event)" expand="block">Search</ion-button>
+                    </section>
+                </ion-card>
+            </div>
+        </div>
+    </div>
+</ion-content>

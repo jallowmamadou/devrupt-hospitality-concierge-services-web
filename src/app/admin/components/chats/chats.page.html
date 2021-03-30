@@ -1,0 +1,66 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Conversations</ion-title>
+    <ion-chip (click)="openSettings()" color="warning" outline slot="end">
+      <ion-icon name="settings-outline"></ion-icon>
+    </ion-chip>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <div *ngIf="settings$ | async"></div>
+  <div
+    *ngIf="conversations$ | async as conversations; else noConversatioms"
+    class="container"
+  >
+    <ion-list *ngIf="conversations.length">
+      <ion-list-header>Recent Conversations</ion-list-header>
+      <ion-item
+        *ngFor="let conversation of conversations"
+        [queryParams]="{
+          propertyId: route.snapshot.queryParams['propertyId']
+        }"
+        [routerLink]="['/admin/chats/conversations', conversation?.reservationId]"
+        queryParamsHandling="merge"
+      >
+        <ion-thumbnail slot="start">
+          <img
+            [src]="conversation?.sender.img || 'https://eu.ui-avatars.com/api/?name='.concat(
+                             (conversation?.guest?.firstName
+                            + ' ' +
+                            conversation?.guest?.middleInitial
+                            + ' ' +
+                            conversation?.guest?.lastName
+                        )
+                            ) "
+          />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>
+            {{ (conversation?.guest?.firstName + ' ' +
+            conversation?.guest?.lastName) | titlecase }}
+          </h2>
+          <div>
+            <ion-chip title="Reservation">
+              <ion-icon name="bookmarks-outline"></ion-icon>
+              <ion-label>{{conversation.reservationId}}</ion-label>
+            </ion-chip>
+
+            <ion-chip title="Total messages">
+              <ion-icon name="mail-outline"></ion-icon>
+              <ion-label>{{conversation?.data.length}}</ion-label>
+            </ion-chip>
+          </div>
+          <p>{{conversation?.data[conversation?.data.length - 1].text}}...</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!conversations.length">
+      <ion-item>
+        <ion-label>There are no conversations</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <ng-template #noConversatioms>
+    <strong>There are no conversations</strong>
+  </ng-template>
+</ion-content>

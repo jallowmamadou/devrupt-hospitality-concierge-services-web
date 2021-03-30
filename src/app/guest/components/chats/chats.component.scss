@@ -1,0 +1,33 @@
+.conversation--participant-host {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  word-break: break-all;
+
+  .fragment {
+    --background: #ebfaff;
+    --border-radius: 14px 15px 3px 18px;
+    padding: 6px 7px 2px 5px;
+  }
+}
+
+.conversation--participant-hotel {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  word-break: break-all;
+
+  .fragment {
+    --background: #eaecec;
+    --border-radius: 14px 15px 18px 3px;
+    padding: 6px 7px 2px 5px;
+  }
+}
+
+ion-footer > ion-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

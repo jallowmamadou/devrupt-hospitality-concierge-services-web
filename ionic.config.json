@@ -1,0 +1,8 @@
+{
+  "name": "teraal",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "d1c77f0e"
+}

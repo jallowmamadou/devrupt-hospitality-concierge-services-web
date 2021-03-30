@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "teraal-513cf": {
+      "hosting": {
+        "app": [
+          "teraal-513cf"
+        ]
+      }
+    }
+  }
+}

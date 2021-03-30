@@ -1,0 +1,137 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ property?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div *ngIf="vm$ | async as vm" class="container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Hotel</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-icon name="business-outline" slot="start"></ion-icon>
+          <ion-label>
+            {{ vm.property.companyName }}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="location-outline" slot="start"></ion-icon>
+          <ion-label>
+            <address>
+              {{ vm.property.location.addressLine1 }} <br />
+              {{ vm.property.location.postalCode }} <br />
+              {{ vm.property.location.city }}
+            </address>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="time-outline" slot="start"></ion-icon>
+          <ion-label>{{ vm.property.timeZone }}</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title> Reservation</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-icon name="person" slot="start"></ion-icon>
+          <ion-chip
+            (click)="checkout(vm.reservation.id)"
+            *ngIf="vm.reservation.status === 'InHouse'"
+            color="warning"
+            outline
+            slot="end"
+          >
+            <ion-icon name="airplane-outline"></ion-icon>
+            <ion-label>Checkout</ion-label>
+          </ion-chip>
+          <ion-chip
+            (click)="checkout(vm.reservation.id)"
+            *ngIf="vm.reservation.status === 'CheckedOut'"
+            [disabled]="vm.reservation.status === 'CheckedOut'"
+            color="default"
+            outline
+            slot="end"
+          >
+            <ion-icon name="airplane-outline"></ion-icon>
+            <ion-label>Checked Out</ion-label>
+          </ion-chip>
+          <ion-label>
+            {{ vm.reservation.primaryGuest.firstName }}
+            {{ vm.reservation.primaryGuest.middleInitial }}
+            {{ vm.reservation.primaryGuest.lastName }}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="bookmarks-outline" slot="start"></ion-icon>
+          <ion-label>{{ vm.reservation.id }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="bed-outline" slot="start"></ion-icon>
+          <ion-label>{{ vm.reservation.unit.name }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label>
+            {{ vm.reservation.checkInTime | date: "medium" }}
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="cash-outline" slot="start"></ion-icon>
+          <ion-label>
+            {{ vm.reservation.payableAmount.guest.amount }}
+            {{ vm.reservation.payableAmount.guest.currency }} (Payable)
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Bill</ion-card-title>
+      </ion-card-header>
+      <ion-card-content *ngFor="let folios of vm?.folios?.folios">
+        <ion-item-divider>
+          <ion-label><span>Folio Total:</span> &nbsp;</ion-label>
+          <strong>
+            {{ folios?.balance.amount }}
+            {{ folios?.balance.currency }}
+          </strong>
+        </ion-item-divider>
+        <table [dataSource]="folios.charges" mat-table style="width: 100%">
+          <ng-container matColumnDef="Date">
+            <th *matHeaderCellDef mat-header-cell>Date</th>
+            <td *matCellDef="let element" mat-cell>
+              {{ element.serviceDate | date: "medium" }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Service">
+            <th *matHeaderCellDef mat-header-cell>Service</th>
+            <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="Amount">
+            <th *matHeaderCellDef mat-header-cell>Amount</th>
+            <td *matCellDef="let element" mat-cell>
+              {{ element.amount.grossAmount }}
+              {{ element.amount.currency }}
+            </td>
+          </ng-container>
+
+          <tr
+            *matHeaderRowDef="['Date', 'Service', 'Amount']"
+            mat-header-row
+          ></tr>
+          <tr
+            *matRowDef="let row; columns: ['Date', 'Service', 'Amount']"
+            mat-row
+          ></tr>
+        </table>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
